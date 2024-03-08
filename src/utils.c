@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:51:55 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/08 17:05:25 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:15:26 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,3 +50,32 @@ bool	party_of_one(t_philo *philo)
 	notify(philo, DIED);
 	return (true);
 }
+
+int	getset_funeral(t_lunch *lunch, int set)
+{
+	int	funeral;
+
+	funeral = 0;
+	pthread_mutex_lock(&lunch->mut_funeral);
+	if (set)
+		lunch->funeral = 1;
+	else
+		funeral = lunch->funeral;
+	pthread_mutex_unlock(&lunch->mut_funeral);
+	return (funeral);
+}
+
+/* int	check_last_ate(t_philo *philo, int update)
+{
+	int	alive;
+
+	alive = 1;
+	pthread_mutex_lock(&philo->mut_last_ate);
+	if (update)
+		philo->t_last_ate = get_time();
+	else
+		if (get_time() - philo->t_last_ate > philo->lunch->t_die)
+			alive = 0;
+	pthread_mutex_unlock(&philo->mut_last_ate);
+	return (alive);
+} */
