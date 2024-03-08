@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 13:38:14 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/08 16:55:31 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:38:36 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ number_of_times_each_philosopher_must_eat parameters must be greater than 0\n"
 # define ERROR_MUTEX_INIT "An error occurred when initializing a mutex"
 # define ERROR_MUTEX_DEST "An error occurred when destroying a mutex"
 
-# define TAKE_FORKS "has taken a fork"
+# define TAKE_LFORK "has taken left fork"
+# define TAKE_RFORK "has taken right fork"
 # define THINK "is thinking"
 # define SLEEP "is sleeping"
 # define EAT "is eating"

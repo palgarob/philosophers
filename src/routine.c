@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 19:30:19 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/08 17:19:36 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:39:02 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	eating(t_philo *philo)
 		pthread_mutex_unlock(philo->r_fork);
 		return ;
 	}
-	notify(philo, TAKE_FORKS);
+	notify(philo, TAKE_RFORK);
 	pthread_mutex_lock(philo->l_fork);
 	if (getset_funeral(philo->lunch, 0))
 	{
@@ -30,7 +30,7 @@ static void	eating(t_philo *philo)
 		pthread_mutex_unlock(philo->l_fork);
 		return ;
 	}
-	notify(philo, TAKE_FORKS);
+	notify(philo, TAKE_LFORK);
 	notify(philo, EAT);
 	philo->t_last_ate = get_time();
 	philo->n_meals_had++;

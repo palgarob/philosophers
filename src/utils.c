@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:51:55 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/08 17:15:26 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:15:58 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ unsigned long	get_time(void)
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL))
+	{
+		printf("WHAT");
 		return (0);
+	}
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
@@ -44,7 +47,7 @@ bool	party_of_one(t_philo *philo)
 {
 	if (philo->lunch->n_philos != 1)
 		return (false);
-	notify(philo, TAKE_FORKS);
+	notify(philo, TAKE_RFORK);
 	ft_usleep(philo->lunch->t_die + 1);
 	getset_funeral(philo->lunch, 1);
 	notify(philo, DIED);
