@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 13:44:32 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/02/06 18:55:05 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:56:04 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	free_mallocs(t_lunch *lunch)
 		free(lunch->forks);
 	if (lunch->philos)
 		free(lunch->philos);
-	if (lunch->threads)
-		free(lunch->threads);
 }
 
 void	clear_lunch(t_lunch *lunch)
@@ -34,7 +32,6 @@ void	clear_lunch(t_lunch *lunch)
 			printf(ERROR_MUTEX_DEST);
 			return ;
 		}
-		//pthread_mutex_destroy(&lunch->philos[i].mut_last_ate);
 	}
 	if (pthread_mutex_destroy(&lunch->mut_funeral))
 	{

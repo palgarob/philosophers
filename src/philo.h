@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 13:38:14 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/08 14:38:10 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:55:31 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <pthread.h>
 // INT_MIN INT_MAX
 # include <limits.h>
+// bool
+# include <stdbool.h>
 
 # define ERROR_ARGNUM "The number of arguments must be 4 or 5\n"
 # define ERROR_ONLY_NUM "Only numeric values are accepted\n"
@@ -50,8 +52,7 @@ typedef struct s_philo
 	int				id;
 	unsigned long	t_last_ate;
 	int				n_meals_had;
-	pthread_mutex_t	mut_last_ate;
-	//pthread_mutex_t	*mut_meals_had;
+	pthread_t		thread;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
 }	t_philo;
@@ -68,7 +69,6 @@ typedef struct s_lunch
 	t_philo			*philos;
 	pthread_t		monitor_life;
 	pthread_t		monitor_full;
-	pthread_t		*threads;
 	pthread_mutex_t	mut_funeral;
 	pthread_mutex_t	*forks;
 }	t_lunch;
@@ -87,8 +87,8 @@ void			*monitor_full(void *param);
 unsigned long	get_time(void);
 void			ft_usleep(unsigned long sleep_time);
 void			notify(t_philo *philo, char *message);
-int				check_funeral(t_lunch *lunch, int arrange);
-void			handle_1_philo(t_philo *philo);
+int				getset_funeral(t_lunch *lunch, int set);
+bool			party_of_one(t_philo *philo);
 int				check_last_ate(t_philo *philo, int update);
 
 #endif

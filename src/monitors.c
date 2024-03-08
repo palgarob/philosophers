@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 20:06:28 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/02/06 18:56:23 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:01:35 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*monitor_life(void *param)
 		{
 			if (get_time() - lunch->philos[i].t_last_ate > lunch->t_die)
 			{
-				check_funeral(lunch, 1);
+				getset_funeral(lunch, 1);
 				if (lunch->n_philos != 1)
 					notify(&lunch->philos[i], DIED);
 				return (NULL);
@@ -61,7 +61,7 @@ void	*monitor_full(void *param)
 		}
 		if (all_full)
 		{
-			check_funeral(lunch, 1);
+			getset_funeral(lunch, 1);
 			return (NULL);
 		}
 		ft_usleep(1);

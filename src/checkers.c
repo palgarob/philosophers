@@ -6,13 +6,13 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:31:06 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/02/06 18:56:46 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:06:21 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_funeral(t_lunch *lunch, int arrange)
+int	getset_funeral(t_lunch *lunch, int arrange)
 {
 	int	fun;
 

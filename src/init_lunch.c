@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:48:42 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/02/06 18:54:47 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:53:36 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,18 @@
 
 static int	init_mallocs(t_lunch *lunch)
 {
-	lunch->threads = (pthread_t *)malloc(sizeof(pthread_t) * lunch->n_philos);
-	if (!lunch->threads)
-	{
-		printf(ERROR_MALLOC);
-		return (1);
-	}
 	lunch->philos = (t_philo *)malloc(sizeof(t_philo) * lunch->n_philos);
 	if (!lunch->philos)
 	{
 		printf(ERROR_MALLOC);
-		free(lunch->threads);
-		return (2);
+		return (1);
 	}
 	lunch->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * lunch->n_philos);
 	if (!lunch->forks)
 	{
 		printf(ERROR_MALLOC);
-		free_mallocs(lunch);
-		return(3);
+		free(lunch->philos);
+		return(1);
 	}
 	return (0);
 }
@@ -47,8 +40,6 @@ static void	init_philos(t_lunch *lunch)
 		lunch->philos[i].lunch = lunch;
 		lunch->philos[i].id = i + 1;
 		lunch->philos[i].n_meals_had = 0;
-		//pthread_mutex_init(&lunch->philos[i].mut_last_ate, NULL);
-		//pthread_mutex_init(&lunch->philos[i].mut_meals_had, NULL);
 	}
 }
 
