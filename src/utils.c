@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:51:55 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/08 18:15:58 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:29:45 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 void	notify(t_philo *philo, char *message)
 {
-	printf(
-		"%lu %d %s\n",
-		get_time() - philo->lunch->start_time,
-		philo->id,
-		message
-	);
+	pthread_mutex_lock(&philo->lunch->mut_notify);
+	if (!getset_funeral(philo->lunch, 0) || message[0] == DIED[0])
+		printf(
+			"%lu %d %s\n",
+			get_time() - philo->lunch->start_time,
+			philo->id,
+			message
+		);
+	pthread_mutex_unlock(&philo->lunch->mut_notify);
 }
 
 unsigned long	get_time(void)
@@ -47,7 +50,7 @@ bool	party_of_one(t_philo *philo)
 {
 	if (philo->lunch->n_philos != 1)
 		return (false);
-	notify(philo, TAKE_RFORK);
+	notify(philo, TAKE_FORK);
 	ft_usleep(philo->lunch->t_die + 1);
 	getset_funeral(philo->lunch, 1);
 	notify(philo, DIED);
@@ -68,17 +71,16 @@ int	getset_funeral(t_lunch *lunch, int set)
 	return (funeral);
 }
 
-/* int	check_last_ate(t_philo *philo, int update)
+unsigned long	getset_last_ate(t_philo *philo, int set)
 {
-	int	alive;
-
-	alive = 1;
+	unsigned long	last_ate;
+	
+	last_ate = 0;
 	pthread_mutex_lock(&philo->mut_last_ate);
-	if (update)
+	if (set)
 		philo->t_last_ate = get_time();
 	else
-		if (get_time() - philo->t_last_ate > philo->lunch->t_die)
-			alive = 0;
+		last_ate = philo->t_last_ate;
 	pthread_mutex_unlock(&philo->mut_last_ate);
-	return (alive);
-} */
+	return (last_ate);
+}

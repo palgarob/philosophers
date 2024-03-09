@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:48:42 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/08 14:53:36 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:07:04 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,14 @@ static int	init_mallocs(t_lunch *lunch)
 {
 	lunch->philos = (t_philo *)malloc(sizeof(t_philo) * lunch->n_philos);
 	if (!lunch->philos)
-	{
-		printf(ERROR_MALLOC);
-		return (1);
-	}
+		return (printf(ERROR_MALLOC), 1);
 	lunch->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * lunch->n_philos);
 	if (!lunch->forks)
-	{
-		printf(ERROR_MALLOC);
-		free(lunch->philos);
-		return(1);
-	}
+		return(printf(ERROR_MALLOC), free(lunch->philos), 1);
 	return (0);
 }
 
-static void	init_philos(t_lunch *lunch)
+static int	init_philos(t_lunch *lunch)
 {
 	int	i;
 
@@ -40,7 +33,10 @@ static void	init_philos(t_lunch *lunch)
 		lunch->philos[i].lunch = lunch;
 		lunch->philos[i].id = i + 1;
 		lunch->philos[i].n_meals_had = 0;
+		if (pthread_mutex_init(&lunch->philos[i].mut_last_ate, NULL))
+			return (printf(ERROR_MUTEX_INIT), 1);
 	}
+	return (0);
 }
 
 static int	init_forks(t_lunch *lunch)
@@ -51,10 +47,7 @@ static int	init_forks(t_lunch *lunch)
 	while (++i < lunch->n_philos)
 	{
 		if (pthread_mutex_init(&lunch->forks[i], NULL))
-		{
-			printf(ERROR_MUTEX_INIT);
-			return (1);
-		}
+			return (printf(ERROR_MUTEX_INIT), 1);
 	}
 	i = 0;
 	lunch->philos[i].l_fork = &lunch->forks[i];
@@ -70,18 +63,13 @@ static int	init_forks(t_lunch *lunch)
 int	init_lunch(t_lunch *lunch)
 {
 	lunch->funeral = 0;
-	if (pthread_mutex_init(&lunch->mut_funeral, NULL))
-	{
-		printf(ERROR_MUTEX_INIT);
-		return (3);
-	}
+	if (pthread_mutex_init(&lunch->mut_funeral, NULL) || pthread_mutex_init(&lunch->mut_notify, NULL))
+		return (printf(ERROR_MUTEX_INIT), 1);
 	if (init_mallocs(lunch))
 		return (1);
-	init_philos(lunch);
+	if (init_philos(lunch))
+		return (1);
 	if (init_forks(lunch))
-	{
-		free_mallocs(lunch);
-		return (2);
-	}
+		return (free_mallocs(lunch), 1);
 	return (0);
 }

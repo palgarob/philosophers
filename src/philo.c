@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 09:49:25 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/08 15:08:07 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/09 20:49:08 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int	run_threads(t_lunch *lunch)
 	lunch->start_time = get_time();
 	while (++i < lunch->n_philos)
 	{
+		getset_last_ate(&lunch->philos[i], 1);
 		if (pthread_create(&lunch->philos[i].thread, NULL, routine, &lunch->philos[i]))
 			return (printf(ERROR_THREAD_CREATE), 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 13:38:14 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/08 17:38:36 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:06:25 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ number_of_times_each_philosopher_must_eat parameters must be greater than 0\n"
 # define ERROR_MUTEX_INIT "An error occurred when initializing a mutex"
 # define ERROR_MUTEX_DEST "An error occurred when destroying a mutex"
 
-# define TAKE_LFORK "has taken left fork"
-# define TAKE_RFORK "has taken right fork"
+# define TAKE_FORK "has taken a fork"
 # define THINK "is thinking"
 # define SLEEP "is sleeping"
 # define EAT "is eating"
@@ -56,6 +55,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	mut_last_ate;
 }	t_philo;
 
 typedef struct s_lunch
@@ -71,6 +71,7 @@ typedef struct s_lunch
 	pthread_t		monitor_life;
 	pthread_t		monitor_full;
 	pthread_mutex_t	mut_funeral;
+	pthread_mutex_t	mut_notify;
 	pthread_mutex_t	*forks;
 }	t_lunch;
 
@@ -90,6 +91,5 @@ void			ft_usleep(unsigned long sleep_time);
 void			notify(t_philo *philo, char *message);
 int				getset_funeral(t_lunch *lunch, int set);
 bool			party_of_one(t_philo *philo);
-int				check_last_ate(t_philo *philo, int update);
-
+unsigned long	getset_last_ate(t_philo *philo, int set);
 #endif
