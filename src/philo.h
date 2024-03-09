@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 13:38:14 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/09 22:06:25 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:51:08 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_lunch
 	unsigned long	t_sleep;
 	int				must_eat;
 	unsigned long	start_time;
-	int				funeral;
+	bool			funeral;
 	t_philo			*philos;
 	pthread_t		monitor_life;
 	pthread_t		monitor_full;
@@ -89,7 +89,6 @@ void			*monitor_full(void *param);
 unsigned long	get_time(void);
 void			ft_usleep(unsigned long sleep_time);
 void			notify(t_philo *philo, char *message);
-int				getset_funeral(t_lunch *lunch, int set);
 bool			party_of_one(t_philo *philo);
 unsigned long	getset_last_ate(t_philo *philo, int set);
 #endif

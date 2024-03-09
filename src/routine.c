@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 19:30:19 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/09 22:34:30 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:53:09 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*routine(void *param)
 	philo = (t_philo *)param;
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->lunch->t_eat - 10);
-	while (!getset_funeral(philo->lunch, 0))
+	while (!philo->lunch->funeral)
 	{
 		eating(philo);
 		sleeping(philo);

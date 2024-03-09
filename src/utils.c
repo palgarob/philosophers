@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:51:55 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/09 22:29:45 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:52:11 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	notify(t_philo *philo, char *message)
 {
 	pthread_mutex_lock(&philo->lunch->mut_notify);
-	if (!getset_funeral(philo->lunch, 0) || message[0] == DIED[0])
+	if (!philo->lunch->funeral || message[0] == DIED[0])
 		printf(
 			"%lu %d %s\n",
 			get_time() - philo->lunch->start_time,
@@ -52,23 +52,9 @@ bool	party_of_one(t_philo *philo)
 		return (false);
 	notify(philo, TAKE_FORK);
 	ft_usleep(philo->lunch->t_die + 1);
-	getset_funeral(philo->lunch, 1);
+	philo->lunch->funeral = true;
 	notify(philo, DIED);
 	return (true);
-}
-
-int	getset_funeral(t_lunch *lunch, int set)
-{
-	int	funeral;
-
-	funeral = 0;
-	pthread_mutex_lock(&lunch->mut_funeral);
-	if (set)
-		lunch->funeral = 1;
-	else
-		funeral = lunch->funeral;
-	pthread_mutex_unlock(&lunch->mut_funeral);
-	return (funeral);
 }
 
 unsigned long	getset_last_ate(t_philo *philo, int set)
