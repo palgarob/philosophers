@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:51:55 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/10 03:07:35 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/10 14:33:09 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	notify(t_philo *philo, char *message)
 {
 	pthread_mutex_lock(&philo->lunch->mut_notify);
-	if (!philo->lunch->funeral || message[0] == DIED[0])
+	if (!getset_funeral(philo->lunch, 0) || message[0] == DIED[0])
 		printf("%lu %d %s\n", get_time() - philo->lunch->start_time,
 			philo->id, message);
 	pthread_mutex_unlock(&philo->lunch->mut_notify);
@@ -48,7 +48,7 @@ bool	party_of_one(t_philo *philo)
 		return (false);
 	notify(philo, TAKE_FORK);
 	ft_usleep(philo->lunch->t_die + 1);
-	philo->lunch->funeral = true;
+	getset_funeral(philo->lunch, 1);
 	notify(philo, DIED);
 	return (true);
 }

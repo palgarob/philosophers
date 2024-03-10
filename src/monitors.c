@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 20:06:28 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/10 03:22:38 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/10 14:52:47 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ void	*monitor_life(void *param)
 	lunch = (t_lunch *)param;
 	while (1)
 	{
-		if (lunch->funeral)
+		if (getset_funeral(lunch, 0))
 			return (NULL);
 		i = -1;
 		while (++i < lunch->n_philos)
 		{
-			if (get_time() - lunch->philos[i].t_last_ate > lunch->t_die)
+			if (get_time() - getset_last_ate(&lunch->philos[i], 0)
+				> lunch->t_die)
 			{
-				lunch->funeral = true;
+				getset_funeral(lunch, 1);
 				if (lunch->n_philos != 1)
 					notify(&lunch->philos[i], DIED);
 				return (NULL);
@@ -38,39 +39,30 @@ void	*monitor_life(void *param)
 	return (NULL);
 }
 
-static bool	all_are_full(t_lunch *lunch, int all_full)
+static bool	all_are_full(t_lunch *lunch)
 {
-	if (all_full)
+	int			i;
+
+	i = -1;
+	while (++i < lunch->n_philos)
 	{
-		lunch->funeral = true;
-		return (true);
+		if (getset_n_meals_had(&lunch->philos[i], 0) < lunch->must_eat)
+			return (false);
 	}
-	return (false);
+	return (true);
 }
 
 void	*monitor_full(void *param)
 {
 	t_lunch	*lunch;
-	int		i;
-	int		all_full;
 
 	lunch = (t_lunch *)param;
 	while (1)
 	{
-		if (lunch->funeral)
+		if (getset_funeral(lunch, 0))
 			return (NULL);
-		i = -1;
-		all_full = 1;
-		while (++i < lunch->n_philos)
-		{
-			if (lunch->philos[i].n_meals_had < lunch->must_eat)
-			{
-				all_full = 0;
-				break ;
-			}
-		}
-		if (all_are_full(lunch, all_full))
-			return (NULL);
+		if (all_are_full(lunch))
+			return (getset_funeral(lunch, 1), NULL);
 		ft_usleep(1);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:48:42 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/10 03:08:52 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/10 14:21:09 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ static int	init_philos(t_lunch *lunch)
 		lunch->philos[i].lunch = lunch;
 		lunch->philos[i].id = i + 1;
 		lunch->philos[i].n_meals_had = 0;
+		if (pthread_mutex_init(&lunch->philos[i].mut_last_ate, NULL)
+			|| pthread_mutex_init(&lunch->philos[i].mut_n_meals_had, NULL))
+			return (1);
 	}
 	return (0);
 }
@@ -62,7 +65,8 @@ static int	init_forks(t_lunch *lunch)
 int	init_lunch(t_lunch *lunch)
 {
 	lunch->funeral = 0;
-	if (pthread_mutex_init(&lunch->mut_notify, NULL))
+	if (pthread_mutex_init(&lunch->mut_notify, NULL)
+		|| pthread_mutex_init(&lunch->mut_funeral, NULL))
 		return (printf(ERROR_MUTEX_INIT), 1);
 	if (init_mallocs(lunch))
 		return (1);
