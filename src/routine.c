@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 19:30:19 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/09 22:53:09 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/10 02:38:52 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	eating(t_philo *philo)
 	pthread_mutex_lock(philo->l_fork);
 	notify(philo, TAKE_FORK);
 	notify(philo, EAT);
-	getset_last_ate(philo, 1);
+	philo->t_last_ate = get_time();
 	philo->n_meals_had++;
 	ft_usleep(philo->lunch->t_eat);
 	pthread_mutex_unlock(philo->r_fork);

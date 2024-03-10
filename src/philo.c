@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 09:49:25 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/09 20:49:08 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/10 03:06:42 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ static int	run_threads(t_lunch *lunch)
 	lunch->start_time = get_time();
 	while (++i < lunch->n_philos)
 	{
-		getset_last_ate(&lunch->philos[i], 1);
-		if (pthread_create(&lunch->philos[i].thread, NULL, routine, &lunch->philos[i]))
+		lunch->philos[i].t_last_ate = get_time();
+		if (pthread_create(&lunch->philos[i].thread,
+				NULL, routine, &lunch->philos[i]))
 			return (printf(ERROR_THREAD_CREATE), 1);
 	}
 	if (pthread_create(&lunch->monitor_life, NULL, monitor_life, lunch))
 		return (printf(ERROR_THREAD_CREATE), 1);
-	if (lunch->must_eat != -1 && pthread_create(&lunch->monitor_full, NULL, monitor_full, lunch))
+	if (lunch->must_eat != -1 && pthread_create(&lunch->monitor_full,
+			NULL, monitor_full, lunch))
 		return (printf(ERROR_THREAD_CREATE), 1);
 	return (0);
 }

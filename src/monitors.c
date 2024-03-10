@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 20:06:28 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/09 22:53:56 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/10 03:22:38 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*monitor_life(void *param)
 {
 	t_lunch	*lunch;
-	int	i;
+	int		i;
 
 	lunch = (t_lunch *)param;
 	while (1)
@@ -25,7 +25,7 @@ void	*monitor_life(void *param)
 		i = -1;
 		while (++i < lunch->n_philos)
 		{
-			if (get_time() - getset_last_ate(&lunch->philos[i], 0) > lunch->t_die)
+			if (get_time() - lunch->philos[i].t_last_ate > lunch->t_die)
 			{
 				lunch->funeral = true;
 				if (lunch->n_philos != 1)
@@ -36,6 +36,16 @@ void	*monitor_life(void *param)
 		ft_usleep(1);
 	}
 	return (NULL);
+}
+
+static bool	all_are_full(t_lunch *lunch, int all_full)
+{
+	if (all_full)
+	{
+		lunch->funeral = true;
+		return (true);
+	}
+	return (false);
 }
 
 void	*monitor_full(void *param)
@@ -59,11 +69,8 @@ void	*monitor_full(void *param)
 				break ;
 			}
 		}
-		if (all_full)
-		{
-			lunch->funeral = true;
+		if (all_are_full(lunch, all_full))
 			return (NULL);
-		}
 		ft_usleep(1);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 13:44:32 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/09 22:08:46 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/10 02:41:06 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	clear_lunch(t_lunch *lunch)
 	i = -1;
 	while (++i < lunch->n_philos)
 	{
-		if (pthread_mutex_destroy(&lunch->forks[i]) || pthread_mutex_destroy(&lunch->philos[i].mut_last_ate))
+		if (pthread_mutex_destroy(&lunch->forks[i]))
 		{
 			printf(ERROR_MUTEX_DEST);
 			return ;
 		}
 	}
-	if (pthread_mutex_destroy(&lunch->mut_funeral) || pthread_mutex_destroy(&lunch->mut_notify))
+	if (pthread_mutex_destroy(&lunch->mut_notify))
 	{
 		printf(ERROR_MUTEX_DEST);
 		return ;
