@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 20:06:28 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/10 14:52:47 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:45:22 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*monitor_life(void *param)
 		i = -1;
 		while (++i < lunch->n_philos)
 		{
-			if (get_time() - getset_last_ate(&lunch->philos[i], 0)
+			if (get_time() - getset_t_last_ate(&lunch->philos[i], 0)
 				> lunch->t_die)
 			{
 				getset_funeral(lunch, 1);

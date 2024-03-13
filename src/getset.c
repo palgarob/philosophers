@@ -6,13 +6,13 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:32:34 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/10 14:33:14 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:45:22 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long	getset_last_ate(t_philo *philo, bool set)
+unsigned long	getset_t_last_ate(t_philo *philo, bool set)
 {
 	unsigned long	t_last_ate;
 

@@ -6,7 +6,7 @@
 /*   By: pepaloma <pepaloma@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 13:44:32 by pepaloma          #+#    #+#             */
-/*   Updated: 2024/03/10 14:37:48 by pepaloma         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:31:05 by pepaloma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void	clear_lunch(t_lunch *lunch)
 			return ;
 		}
 	}
-	if (pthread_mutex_destroy(&lunch->mut_notify)
-		|| pthread_mutex_destroy(&lunch->mut_funeral))
+	if (pthread_mutex_destroy(&lunch->mut_funeral))
 	{
 		printf(ERROR_MUTEX_DEST);
 		return ;

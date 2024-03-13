@@ -9,7 +9,7 @@ CC				= cc
 CFLAGS			= -Wall -Wextra -Werror
 RM				= rm -rf
 SANITIZE_FLAGS	= -O1 -g -fsanitize=thread
-# VALGRIND_FLAGS = -O0 -g
+#VALGRIND_FLAGS = -O0 -g
 
 FILES	=	clear_lunch.c \
 			getset.c \
@@ -29,11 +29,11 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	mkdir -p $(BIN_DIR)
-	$(CC) $(CFLAGS) $(SANITIZE_FLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(SANITIZE_FLAGS) -I$(INC_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 fclean : clean
 	$(RM) $(BIN_DIR)
